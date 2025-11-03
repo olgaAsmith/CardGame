@@ -16,45 +16,40 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
   deckEmpty,
 }) => {
   return (
-    <div className='h-[33%] flex justify-center flex-col min-w-1/3'>
+    <div className='flex justify-center flex-col w-full min-h-[160px]'>
       {gameResult && (
         <div className='w-full text-[52px] font-semibold text-white text-center'>
           {gameResult}
         </div>
       )}
-      <div className='flex gap-10'>
+      <div className='flex gap-28 pointer-events-none'>
         {deckEmpty ? (
           ''
         ) : (
-          <div className='flex flex-wrap gap-2 border border-white p-2'>
+          <div className='relative w-[90px] h-[140px]'>
             <CardComponent
               card={{ id: 'deck', suit: '♠', rank: 'A' }}
               isHidden={true}
-              className='bg-sky-500 border-sky-500 text-white'
+              className='absolute top-0 left-0 z-[10]'
             />
             {trumpCard && (
               <CardComponent
                 card={trumpCard}
-                isTrump={true}
-                className='border-red-500 text-red-500 bg-white'
+                className='absolute left-[50%] top-0 rotate-90 '
               />
             )}
           </div>
         )}
 
-        <div className='flex gap-10'>
+        <div className='flex gap-12'>
           {tableCards.map((tableCard, index) => (
-            <div key={index} className='relative w-12 h-20'>
-              <CardComponent
-                card={tableCard.attack}
-                className='absolute bottom-0 left-0 border-sky-500 text-black bg-white'
-              />
+            <div key={index} className='relative'>
+              <CardComponent card={tableCard.attack} />
 
               {tableCard.defense && (
                 <CardComponent
                   card={tableCard.defense}
-                  isTrump={tableCard.defense.suit === trumpCard?.suit}
-                  className='absolute bottom-4 left-8 text-black bg-white'
+                  className='absolute left-8 -top-4'
                 />
               )}
             </div>

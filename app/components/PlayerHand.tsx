@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, Suit } from '../store/types';
 import { CardComponent } from './CardComponent';
 
@@ -17,17 +17,39 @@ export const PlayerHand: React.FC<PlayerHandProps> = ({
   onCardClick,
   isHidden = false,
 }) => {
+  const BASE_MARGIN = 8;
+
+  const margin = useMemo(() => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth < 1024 && hand.length >= 6) {
+      return -60;
+    }
+
+    if (hand.length <= 10) {
+      return BASE_MARGIN;
+    }
+
+    return -(BASE_MARGIN + hand.length + 25);
+  }, [hand.length]);
+
   return (
-    <div className='flex flex-wrap gap-2'>
-      {hand.map((card) => (
-        <CardComponent
+    <div className="flex w-full justify-center min-h-[140px]">
+      {hand.map((card, index) => (
+        <div
           key={card.id}
-          card={card}
-          onClick={onCardClick}
-          isClickable={isHumanTurn && !isHidden}
-          isHidden={isHidden}
-          isTrump={card.suit === trumpSuit}
-        />
+          style={{
+            marginLeft: index === 0 ? 0 : `${margin}px`,
+            transition: 'margin 0.2s ease',
+          }}
+        >
+          <CardComponent
+            card={card}
+            onClick={onCardClick}
+            isClickable={isHumanTurn && !isHidden}
+            isHidden={isHidden}
+          />
+        </div>
       ))}
     </div>
   );

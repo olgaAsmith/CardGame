@@ -35,7 +35,14 @@ export default function Home() {
     deal(2);
     identifyTrump();
     defineActivePlayer();
-  }, [resetDeck, createDeck, createPlayers, deal, identifyTrump, defineActivePlayer]);
+  }, [
+    resetDeck,
+    createDeck,
+    createPlayers,
+    deal,
+    identifyTrump,
+    defineActivePlayer,
+  ]);
 
   const humanId = players[0]?.id;
   const isHumanTurn = humanId === activePlayerId;
@@ -152,24 +159,8 @@ export default function Home() {
 
   return (
     <div className='flex flex-col h-dvh'>
-      <header>
-        <div className='flex justify-center gap-2 mb-4 p-4'>
-          <button
-            onClick={startGame}
-            className='px-4 py-2 bg-blue-600 text-white rounded'
-          >
-            Начать игру
-          </button>
-          <button
-            onClick={resetDeck}
-            className='px-4 py-2 bg-red-500 text-white rounded'
-          >
-            Закончить игру
-          </button>
-        </div>
-      </header>
-      <main className='grow flex flex-col items-center justify-center'>
-        <div className='h-20 flex items-center justify-center flex-col'>
+      <main className='grow flex flex-col items-center justify-center gap-10 p-8'>
+        <div className='flex items-center justify-center flex-col'>
           {players[1] && (
             <PlayerHand
               hand={players[1].hand}
@@ -180,38 +171,18 @@ export default function Home() {
             />
           )}
         </div>
+        {deck && players.length ? (
+          <TableDisplay
+            tableCards={tableCards}
+            trumpCard={trump}
+            gameResult={gameResult}
+            deckEmpty={deckEmpty}
+          />
+        ) : (
+          ''
+        )}
 
-        <TableDisplay
-          tableCards={tableCards}
-          trumpCard={trump}
-          gameResult={gameResult}
-          deckEmpty={deckEmpty}
-        />
-
-        <div className='h-20 flex items-center justify-center flex-col'>
-          {deck && players.length ? (
-            <div className='flex gap-5 mb-5'>
-              <button
-                className='border-1 bg-yellow-600 px-6 py-2 cursor-pointer'
-                onClick={endRound}
-              >
-                Бито
-              </button>
-              <button
-                className='border-1 bg-pink-600 px-6 py-2 cursor-pointer'
-                onClick={() => {
-                  if (!isHumanTurn || players[0]?.role !== 'defense') return;
-                  takeCards(humanId);
-                }}
-                disabled={!isHumanTurn || players[0]?.role !== 'defense'}
-              >
-                Взять
-              </button>
-            </div>
-          ) : (
-            ''
-          )}
-
+        <div className='flex items-center justify-center flex-col'>
           {players[0] && (
             <PlayerHand
               hand={players[0].hand}
@@ -231,8 +202,57 @@ export default function Home() {
               }}
             />
           )}
+          {deck && players.length ? (
+            <div className='flex gap-10 mt-12 justify-center items-center'>
+              <button
+                onClick={endRound}
+                className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+                 border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
+                        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 
+                        '
+              >
+                End Round
+              </button>
+
+              <button
+                onClick={() => {
+                  if (!isHumanTurn || players[0]?.role !== 'defense') return;
+                  takeCards(humanId);
+                }}
+                disabled={!isHumanTurn || players[0]?.role !== 'defense'}
+                className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+                      border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
+                        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
+              >
+                Take Cards
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={startGame}
+              className='px-16 py-6 text-[28px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+            border-cyan-600 text-cyan-500 shadow-[0_0_25px_#00E5FF] hover:shadow-[0_0_200px_#00E5FF] hover:scale-130 
+              disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
+            >
+              Start Game
+            </button>
+          )}
         </div>
       </main>
+      <div className='w-full flex items-end flex-col p-2'>
+        {deck && players.length ? (
+          <button
+            onClick={resetDeck}
+            className='w-fit px-3 py-2 text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+            border-[#BD00FF] text-[#BD00FF] shadow-[0_0_10px_#BD00FF] hover:shadow-[0_0_0px_#ff073a]  hover:text-[#ff073a] hover:border-[#ff073a]
+              disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
+          >
+            End Game
+          </button>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 }
