@@ -16,31 +16,30 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
   deckEmpty,
 }) => {
   return (
-    <div className='flex justify-center flex-col w-full min-h-[160px]'>
+    <div className='relative flex justify-center flex-col  w-1/2  min-h-[160px]'>
+      {deckEmpty ? (
+        ''
+      ) : (
+        <div className='absolute w-[90px] h-[140px] top-0 -left-60 '>
+          <CardComponent
+            card={{ id: 'deck', suit: '♠', rank: 'A' }}
+            isHidden={true}
+            className='absolute top-0 left-0 z-[10]'
+          />
+          {trumpCard && (
+            <CardComponent
+              card={trumpCard}
+              className='absolute left-[50%] top-0 rotate-90 '
+            />
+          )}
+        </div>
+      )}
       {gameResult && (
         <div className='w-full text-[52px] font-semibold text-white text-center'>
           {gameResult}
         </div>
       )}
-      <div className='flex gap-28 pointer-events-none'>
-        {deckEmpty ? (
-          ''
-        ) : (
-          <div className='relative w-[90px] h-[140px]'>
-            <CardComponent
-              card={{ id: 'deck', suit: '♠', rank: 'A' }}
-              isHidden={true}
-              className='absolute top-0 left-0 z-[10]'
-            />
-            {trumpCard && (
-              <CardComponent
-                card={trumpCard}
-                className='absolute left-[50%] top-0 rotate-90 '
-              />
-            )}
-          </div>
-        )}
-
+      <div className='relative flex pointer-events-none'>
         <div className='flex gap-12'>
           {tableCards.map((tableCard, index) => (
             <div key={index} className='relative'>

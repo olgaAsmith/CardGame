@@ -48,6 +48,11 @@ export default function Home() {
   const isHumanTurn = humanId === activePlayerId;
   const deckEmpty = deck.length === 0;
 
+  const canEndRound =
+    tableCards.length > 0 &&
+    players[0]?.role === 'attack' &&
+    tableCards.every((tc) => tc.attack !== null && tc.defense !== null);
+
   const handleBotTurn = useCallback(() => {
     const bot = players[1];
     if (!bot) return;
@@ -143,25 +148,19 @@ export default function Home() {
   }, [players, tableCards, trump, attack, defend, takeCards, endRound]);
 
   useEffect(() => {
-    const result = gameResult;
-    if (result) {
-      resetDeck();
-    }
-  }, [gameResult, resetDeck]);
-
-  useEffect(() => {
+    if (gameResult) return;
     if (activePlayerId === players[1]?.id) {
       setTimeout(() => {
         handleBotTurn();
       }, 1000);
     }
-  }, [activePlayerId, players, handleBotTurn]);
+  }, [activePlayerId, players, handleBotTurn, gameResult]);
 
   return (
     <div className='flex flex-col h-dvh'>
       <main className='grow flex flex-col items-center justify-center gap-10 p-8'>
         <div className='flex items-center justify-center flex-col'>
-          {players[1] && (
+          {players[1] && !gameResult && (
             <PlayerHand
               hand={players[1].hand}
               trumpSuit={trump?.suit ?? null}
@@ -183,7 +182,7 @@ export default function Home() {
         )}
 
         <div className='flex items-center justify-center flex-col'>
-          {players[0] && (
+          {players[0] && !gameResult && (
             <PlayerHand
               hand={players[0].hand}
               trumpSuit={trump?.suit ?? null}
@@ -202,14 +201,14 @@ export default function Home() {
               }}
             />
           )}
-          {deck && players.length ? (
+          {deck && players.length && !gameResult ? (
             <div className='flex gap-10 mt-12 justify-center items-center'>
               <button
                 onClick={endRound}
+                disabled={!canEndRound}
                 className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
-                 border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
-                        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 
-                        '
+        border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
+        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
               >
                 End Round
               </button>
@@ -221,26 +220,29 @@ export default function Home() {
                 }}
                 disabled={!isHumanTurn || players[0]?.role !== 'defense'}
                 className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
-                      border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
-                        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
+        border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
+        disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
               >
                 Take Cards
               </button>
             </div>
           ) : (
             <button
-              onClick={startGame}
+              onClick={() => {
+                resetDeck();
+                startGame();
+              }}
               className='px-16 py-6 text-[28px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
-            border-cyan-600 text-cyan-500 shadow-[0_0_25px_#00E5FF] hover:shadow-[0_0_200px_#00E5FF] hover:scale-130 
-              disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
+      border-cyan-600 text-cyan-500 shadow-[0_0_25px_#00E5FF] hover:shadow-[0_0_200px_#00E5FF] hover:scale-130 
+      disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
             >
-              Start Game
+              {gameResult ? 'Play Again' : 'Start Game'}
             </button>
           )}
         </div>
       </main>
       <div className='w-full flex items-end flex-col p-2'>
-        {deck && players.length ? (
+        {deck && players.length && !gameResult ? (
           <button
             onClick={resetDeck}
             className='w-fit px-3 py-2 text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
