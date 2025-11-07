@@ -21,8 +21,25 @@ export const PlayerHand: React.FC<PlayerHandProps> = ({
   const margin = useMemo(() => {
     const screenWidth = window.innerWidth;
 
-    if (screenWidth < 1024 && hand.length >= 6) {
-      return -60;
+    if (screenWidth < 1280) {
+      if (hand.length >= 30) {
+        return -42;
+      }
+      if (hand.length >= 24) {
+        return -40;
+      }
+      if (hand.length >= 18) {
+        return -30;
+      }
+      if (hand.length >= 14) {
+        return -20;
+      }
+      if (hand.length >= 10) {
+        return -10;
+      }
+      if (hand.length >= 6) {
+        return 8;
+      }
     }
 
     if (hand.length <= 10) {

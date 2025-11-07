@@ -202,7 +202,7 @@ export default function Home() {
             />
           )}
           {deck && players.length && !gameResult ? (
-            <div className='absolute bottom-2 left-0 xl:static flex gap-4 xl:gap-10 mt-2 xl:mt-12 xl:justify-center items-center'>
+            <div className='absolute bottom-2 left-2 xl:static flex gap-4 xl:gap-10 mt-2 xl:mt-12 xl:justify-center items-center'>
               <button
                 onClick={endRound}
                 disabled={!canEndRound}
