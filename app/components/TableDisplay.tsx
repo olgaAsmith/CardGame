@@ -16,11 +16,11 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
   deckEmpty,
 }) => {
   return (
-    <div className='relative flex justify-center flex-col w-1/2 min-h-[100px] xl:w-1/2 xl:min-h-[160px]'>
+    <div className='relative flex justify-center flex-col w-1/2 min-h-[100px] xl:w-1/2 xl:min-h-[160px] scale-75 md:scale-100'>
       {deckEmpty ? (
         ''
       ) : (
-        <div className='absolute w-[90px] h-[140px] top-0 -left-40 xl:-left-60'>
+        <div className='absolute w-[90px] h-[140px] top-0 -left-50 xl:-left-60 scale-75 md:scale-100'>
           <CardComponent
             card={{ id: 'deck', suit: '♠', rank: 'A' }}
             isHidden={true}
@@ -40,7 +40,7 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
         </div>
       )}
       <div className='relative flex pointer-events-none'>
-        <div className='flex gap-12'>
+        <div className='flex gap-8 xl:gap-12'>
           {tableCards.map((tableCard, index) => (
             <div key={index} className='relative'>
               <CardComponent card={tableCard.attack} />
@@ -48,7 +48,7 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
               {tableCard.defense && (
                 <CardComponent
                   card={tableCard.defense}
-                  className='absolute left-8 -top-4'
+                  className='absolute left-6 xl:left-8 -top-2 xl:-top-4'
                 />
               )}
             </div>

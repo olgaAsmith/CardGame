@@ -49,7 +49,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   `;
 
   const cornerClasses = `
-    absolute text-[14px] xl:text-[20px] leading-[0.9] flex flex-col items-center justify-center
+    absolute text-[14px] text-bold xl:text-[20px] leading-[0.9] flex flex-col items-center justify-center
   `;
 
   return (
