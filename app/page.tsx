@@ -158,7 +158,7 @@ export default function Home() {
 
   return (
     <div className='flex flex-col h-dvh'>
-      <main className='grow flex flex-col items-center justify-center gap-10 p-8'>
+      <main className='grow flex flex-col items-center justify-between mb-14 xl:mb-0 xl:justify-center gap-2 xl:gap-10 p-2 xl:p-8'>
         <div className='flex items-center justify-center flex-col'>
           {players[1] && !gameResult && (
             <PlayerHand
@@ -202,11 +202,11 @@ export default function Home() {
             />
           )}
           {deck && players.length && !gameResult ? (
-            <div className='flex gap-10 mt-12 justify-center items-center'>
+            <div className='absolute bottom-2 left-0 xl:static flex gap-4 xl:gap-10 mt-2 xl:mt-12 xl:justify-center items-center'>
               <button
                 onClick={endRound}
                 disabled={!canEndRound}
-                className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+                className='px-4 xl:px-6 py-2 text-[14px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
         border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
         disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
               >
@@ -219,7 +219,7 @@ export default function Home() {
                   takeCards(humanId);
                 }}
                 disabled={!isHumanTurn || players[0]?.role !== 'defense'}
-                className='px-6 py-2 text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+                className='px-4 xl:px-6 py-2 text-[14px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
         border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
         disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
               >
@@ -241,11 +241,11 @@ export default function Home() {
           )}
         </div>
       </main>
-      <div className='w-full flex items-end flex-col p-2'>
+      <div className='absolute bottom-2 right-2 xl:static flex items-end flex-col xl:p-2'>
         {deck && players.length && !gameResult ? (
           <button
             onClick={resetDeck}
-            className='w-fit px-3 py-2 text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+            className='w-fit px-3 py-2 text-[12px] xl:text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
             border-[#BD00FF] text-[#BD00FF] shadow-[0_0_10px_#BD00FF] hover:shadow-[0_0_0px_#ff073a]  hover:text-[#ff073a] hover:border-[#ff073a]
               disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
           >

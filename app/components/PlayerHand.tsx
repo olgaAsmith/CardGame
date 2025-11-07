@@ -12,7 +12,6 @@ interface PlayerHandProps {
 
 export const PlayerHand: React.FC<PlayerHandProps> = ({
   hand,
-  trumpSuit,
   isHumanTurn,
   onCardClick,
   isHidden = false,
@@ -34,7 +33,7 @@ export const PlayerHand: React.FC<PlayerHandProps> = ({
   }, [hand.length]);
 
   return (
-    <div className="flex w-full justify-center min-h-[140px]">
+    <div className='flex w-full justify-center min-h-[90px] xl:min-h-[140px]'>
       {hand.map((card, index) => (
         <div
           key={card.id}

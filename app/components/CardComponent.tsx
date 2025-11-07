@@ -32,24 +32,24 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   const suitClass = suitStyles[card.suit] || '';
 
   const cardClasses = `
-    shrink-0 w-[90px] h-[140px] rounded-[12px] bg-[#0a0a1a] flex items-center justify-center text-[52px]
+    shrink-0 w-[60px] h-[90px] xl:w-[90px] xl:h-[140px] rounded-[12px] bg-[#0a0a1a] flex items-center justify-center text-[32px] xl:text-[52px]
     transition-all duration-400 ease-in-out
     border-2
     ${
       isClickable && !isHidden
-        ? 'cursor-pointer hover:scale-102 hover:translate-y-[-20px]'
+        ? 'xl:cursor-pointer xl:hover:scale-102 xl:hover:translate-y-[-20px]'
         : ''
     }
     ${
       isHidden
-        ? 'border border-[#050505]  bg-gradient-to-tr from-[#1a1718] via-[#1c34a3] to-[#1a1718]  shadow-[0_0_10px_#000000]'
+        ? 'border border-[#050505] bg-gradient-to-tr from-[#1a1718] via-[#1c34a3] to-[#1a1718]  shadow-[0_0_10px_#000000]'
         : suitClass
     }
     ${className}
   `;
 
   const cornerClasses = `
-    absolute text-[20px] leading-[0.9] flex flex-col items-center justify-center
+    absolute text-[14px] xl:text-[20px] leading-[0.9] flex flex-col items-center justify-center
   `;
 
   return (
