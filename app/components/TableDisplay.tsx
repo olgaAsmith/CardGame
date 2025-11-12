@@ -16,11 +16,11 @@ export const TableDisplay: React.FC<TableDisplayProps> = ({
   deckEmpty,
 }) => {
   return (
-    <div className='relative flex justify-center flex-col w-1/2 min-h-[100px] xl:w-1/2 xl:min-h-[160px] scale-75 md:scale-100'>
+    <div className='relative flex justify-center flex-col w-1/2 min-h-[100px] xl:w-1/2 xl:min-h-[160px]'>
       {deckEmpty ? (
         ''
       ) : (
-        <div className='absolute w-[90px] h-[140px] top-0 -left-50 xl:-left-60 scale-75 md:scale-100'>
+        <div className='absolute w-[90px] h-[140px] top-0 -left-50 xl:-left-60'>
           <CardComponent
             card={{ id: 'deck', suit: '♠', rank: 'A' }}
             isHidden={true}
