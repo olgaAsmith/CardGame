@@ -220,11 +220,11 @@ export default function Home() {
       </main>
       <div>
         {deck && players.length && !gameResult ? (
-          <div className='absolute bottom-2 left-2 xl:static flex gap-4 xl:gap-10 xl:justify-center items-center'>
+          <div className='fixed bottom-2 left-2 xl:static flex gap-4 xl:gap-10 xl:justify-center items-center'>
             <button
               onClick={endRound}
               disabled={!canEndRound}
-              className='px-2 xl:px-6 py-1 text-[12px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+              className='px-2 xl:px-6 py-1 xl:py-2 text-[12px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
             border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
             disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
             >
@@ -237,7 +237,7 @@ export default function Home() {
                 takeCards(humanId);
               }}
               disabled={!isHumanTurn || players[0]?.role !== 'defense'}
-              className='px-2 xl:px-6 py-1 text-[12px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+              className='px-2 xl:px-6 py-1 xl:py-2 text-[12px] xl:text-[18px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
             border-purple-600 text-purple-500 shadow-[0_0_15px_#BD00FF] hover:shadow-[0_0_35px_#5555ff] hover:scale-110 hover:text-[#5555ff] hover:border-[#5555ff]
             disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:border-slate-400 disabled:text-slate-400'
             >
@@ -248,11 +248,11 @@ export default function Home() {
           ''
         )}
       </div>
-      <div className='absolute bottom-2 right-2 xl:static flex items-end flex-col xl:p-2'>
+      <div className='fixed bottom-2 right-2 xl:static flex items-end flex-col xl:p-2'>
         {deck && players.length && !gameResult ? (
           <button
             onClick={resetDeck}
-            className='w-fit px-3 py-1 text-[12px] xl:text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
+            className='w-fit px-3 py-1 xl:py-2 text-[12px] xl:text-[14px] tracking-[2px] border-2 rounded-lg cursor-pointer transition duration-300 ease-in-out 
             border-[#BD00FF] text-[#BD00FF] shadow-[0_0_10px_#BD00FF] hover:shadow-[0_0_0px_#ff073a]  hover:text-[#ff073a] hover:border-[#ff073a]
               disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100'
           >
