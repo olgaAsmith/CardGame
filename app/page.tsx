@@ -157,7 +157,7 @@ export default function Home() {
   }, [activePlayerId, players, handleBotTurn, gameResult]);
 
   return (
-    <div className='flex flex-col h-dvh'>
+    <div className='flex flex-col h-dvh min-h-screen'>
       <main className='scale-80 lg:scale-100 grow flex flex-col items-center justify-between mb-14 xl:mb-0 xl:justify-center gap-2 xl:gap-10 p-2 xl:p-8'>
         <div className='flex items-center justify-center flex-col'>
           {players[1] && !gameResult && (
