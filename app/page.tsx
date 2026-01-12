@@ -55,7 +55,10 @@ export default function Home() {
 
   const handleBotTurn = useCallback(() => {
     const bot = players[1];
-    if (!bot) return;
+    const human = players[0];
+
+    if (!bot || !human) return;
+    if (gameResult) return;
 
     const tableCard = tableCards.find((tc) => !tc.defense);
 
@@ -86,7 +89,23 @@ export default function Home() {
         takeCards(bot.id);
         console.log('🤖 Бот не смог отбить, берёт карты');
       }
-    } else if (tableCards.length === 0) {
+      if (
+        human.hand.length === 0 &&
+        deck.length === 0 &&
+        tableCards.every((tc) => tc.defense !== null)
+      ) {
+        endRound();
+      }
+
+      return;
+    }
+
+    if (tableCards.length === 0) {
+      if (human.hand.length === 0) {
+        endRound();
+        return;
+      }
+
       const nonTrumpCards = bot.hand.filter((c) => c.suit !== trump?.suit);
       let cardToAttack: Card | undefined;
       if (nonTrumpCards.length > 0) {
@@ -145,7 +164,16 @@ export default function Home() {
         endRound();
       }
     }
-  }, [players, tableCards, trump, attack, defend, takeCards, endRound]);
+  }, [
+    players,
+    gameResult,
+    tableCards,
+    endRound,
+    trump?.suit,
+    defend,
+    takeCards,
+    attack,
+  ]);
 
   useEffect(() => {
     if (gameResult) return;

@@ -91,6 +91,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({ tableCards: [] });
     get().drawCards();
     get().switchRoles();
+    get().checkGameEnd();
   },
   switchRoles: () => {
     const { players } = get();
@@ -111,7 +112,20 @@ export const useGameStore = create<GameState>((set, get) => ({
   attack: (card) => {
     const { tableCards, activePlayerId, players, endTurn } = get();
     const activePlayer = players.find((p) => p.id === activePlayerId);
+    const defender = players.find((p) => p.id !== activePlayerId);
+
+    if (!defender) return;
     if (!activePlayer) return;
+
+    if (defender.hand.length === 0) {
+      if (get().deck.length === 0) {
+        get().checkGameEnd();
+      } else {
+        get().endRound();
+      }
+      return;
+    }
+
     if (activePlayer.role === 'defense') {
       console.log('Сейчас защита — атаковать нельзя!');
       return;
@@ -232,10 +246,12 @@ export const useGameStore = create<GameState>((set, get) => ({
       }),
     })),
   checkGameEnd: () => {
-    const { players, deck, tableCards } = get();
+    const { players, deck } = get();
     const [player1, player2] = players;
 
-    if (deck.length === 0 && tableCards.length === 0) {
+    if (deck.length === 0) {
+      set({ tableCards: [] });
+
       if (player1.hand.length === 0 && player2.hand.length === 0) {
         set({ gameResult: 'draw' });
         console.log('Игра окончена: Ничья!');
